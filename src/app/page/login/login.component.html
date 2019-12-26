@@ -1,3 +1,7 @@
+<div class="alert alert-danger" role="alert" *ngIf="loginService.getCurrentUser() !== undefined && loginService.getCurrentUser().message">
+  ERROR: {{loginService.getCurrentUser().message}}
+</div>
+
 <form [formGroup]="loginForm" (ngSubmit)='onSubmit()'>
   <div class="form-group" >
   <label for="exampleInputEmail1">Username</label>

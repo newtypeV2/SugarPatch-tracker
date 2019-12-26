@@ -1,5 +1,7 @@
+import { LoginServiceService } from '../../login-service.service';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,15 +15,15 @@ export class LoginComponent implements OnInit {
     password: new FormControl('')
   })
   
-  constructor() { 
-    
-  }
+  constructor(private loginService : LoginServiceService) {}
 
   ngOnInit() {
+   
   }
 
   onSubmit = () => {
-    this.submitEmitter.emit(this.loginForm.value);
+    this.loginService.authenticateUser(this.loginForm.value);
+    // this.submitEmitter.emit(this.loginForm.value);
     // fetch('http://localhost:3000/login',{
     //   method: 'POST',
     //   headers: {'Content-Type' : 'application/json'},
