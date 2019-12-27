@@ -1,0 +1,8 @@
+
+<div class="card" style="width: 18rem; margin: 1rem;">
+    <div class="card-body">
+        <span class="font-weight-bold">Blood Sugar Level: </span><span class="text-monospace"><h4>{{record.value}}</h4></span>
+         <p class="card-text"><span class="font-weight-bold">Comment: </span><span class="text-muted">{{record.comment.text}}</span></p>
+        <span class="font-weight-bold"> Entry Date:</span> <span class="text-monospace"> {{record.date | date:'short'}}</span>
+    </div>
+</div>

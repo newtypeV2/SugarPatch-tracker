@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   constructor(private loginService:LoginServiceService, private router: Router){}
 
   ngOnInit(){
-    if (this.loginService.getCurrentUser() === undefined || this.loginService.getCurrentUser().hasOwnProperty('message')){
+    if (this.loginService.currentUser === undefined || this.loginService.currentUser.hasOwnProperty('message')){
       this.router.navigate(['/login']);
     }else{
       this.router.navigate(['/records']);

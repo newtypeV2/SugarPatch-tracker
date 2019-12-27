@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './page/login/login.component';
 import { RecordListComponent } from './page/record-list/record-list.component';
 import { HeaderComponent } from './component/header/header.component';
+import { ReversePipe } from './reverse.pipe';
+import { RecordComponent } from './page/record/record.component';
 
 
 const appRoutes: Routes = [
@@ -20,7 +22,9 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     RecordListComponent,
-    HeaderComponent
+    HeaderComponent,
+    ReversePipe,
+    RecordComponent
   ],
   imports: [
     BrowserModule,

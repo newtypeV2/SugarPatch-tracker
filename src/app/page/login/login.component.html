@@ -1,5 +1,5 @@
-<div class="alert alert-danger" role="alert" *ngIf="loginService.getCurrentUser() !== undefined && loginService.getCurrentUser().message">
-  ERROR: {{loginService.getCurrentUser().message}}
+<div class="alert alert-danger" role="alert" *ngIf="loginService.currentUser !== undefined && loginService.currentUser.message">
+  ERROR: {{loginService.currentUser.message}}
 </div>
 
 <form [formGroup]="loginForm" (ngSubmit)='onSubmit()'>
