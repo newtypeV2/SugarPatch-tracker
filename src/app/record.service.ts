@@ -27,8 +27,12 @@ export class RecordService {
     return this.http.post<Record>(this.BASE_URL+'record',recordInfo, httpOptions);
   }
 
-  editRecord = () => {
+  editRecord = (recordObj) => {
+    return this.http.patch(this.BASE_URL+'record/'+recordObj.id, recordObj,httpOptions)
+  }
 
+  editComment = (commentObj) => {
+    return this.http.patch(this.BASE_URL+'comment/'+commentObj.id, commentObj,httpOptions)
   }
 
   }

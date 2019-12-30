@@ -18,6 +18,32 @@ export class RecordListComponent implements OnInit {
     console.log("INIT",this.records);
   }
 
+  editRecord = (recordObj) => {
+    let value = prompt("Please enter new Bloodsugar level:",recordObj.value);
+    while(!(parseFloat(value) > 0)){
+      value = prompt("Please enter new Bloodsugar level:",recordObj.value);
+    }
+    let record = {
+      id: recordObj.id,
+      value: parseFloat(value)
+    }
+    this.recordService.editRecord(record).subscribe(data =>{
+     this.records = this.records.map(record => record.id === data.id ? data : record)
+    })
+  }
+
+  editComment = (commentObj) => {
+    let text = prompt("Please enter new Comment",commentObj.text);
+    let comment = {
+      id: commentObj.id,
+      text
+    }
+    debugger
+    this.recordService.editComment(comment).subscribe(data =>{
+     this.records = this.records.map(record => record.id === data.id ? data : record)
+    })
+  }
+
   addRecord = () => {
     let value = prompt("Please enter the Bloodsugar level:","0.0");
     while(!(parseFloat(value) > 0)){

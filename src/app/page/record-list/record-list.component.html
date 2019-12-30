@@ -1,5 +1,10 @@
 <h2>Records</h2>
 <button type="button" class="btn btn-outline-success" (click)="addRecord()">+ Add Record</button>
 <div class="row">
-     <app-record *ngFor="let recordObj of records | slice:-10 | reverse" [record]="recordObj"></app-record>
+     <app-record 
+     *ngFor="let recordObj of records | slice:-6 | reverse" 
+     [record]="recordObj"
+     (recordEmitter)="editRecord($event)"
+     (commentEmitter)="editComment($event)"
+     ></app-record>
 </div>
