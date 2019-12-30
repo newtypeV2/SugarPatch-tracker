@@ -19,7 +19,8 @@ const httpOptions = {
 
 
 export class RecordService {
-  private BASE_URL: string = 'http://localhost:3000/';
+  // private BASE_URL: string = 'http://localhost:3000/';
+  private BASE_URL: string = 'https://sugartracker-gg.herokuapp.com/'
 
   constructor(private http : HttpClient) { }
 

@@ -14,7 +14,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class LoginServiceService {
-  private BASE_URL: string = 'http://localhost:3000/';
+  // private BASE_URL: string = 'http://localhost:3000/';
+  private BASE_URL: string = 'https://sugartracker-gg.herokuapp.com/'
   public currentUser;
 
   constructor(private http: HttpClient, private router : Router) { }
