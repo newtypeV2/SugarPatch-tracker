@@ -1,3 +1,8 @@
 export class Record {
-    constructor(public value:number, public date:Date, public comment:object){}
+    constructor(
+        public id:number,
+        public value:number, 
+        public date?:Date, 
+        public comment?:object
+        ){}
 }

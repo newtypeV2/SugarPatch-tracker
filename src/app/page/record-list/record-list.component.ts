@@ -1,3 +1,4 @@
+import { Record } from './../../model/record';
 
 import { RecordService } from './../../record.service';
 import { LoginServiceService } from './../../login-service.service';
@@ -9,13 +10,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./record-list.component.css']
 })
 export class RecordListComponent implements OnInit {
-  records: Object[];
+  records: Record[];
 
   constructor(private loginService : LoginServiceService, private recordService: RecordService) { }
   
   ngOnInit() {
-    this.records = this.loginService.currentUser.sugar_records;
-    console.log("INIT",this.records);
+    // this.records = this.loginService.currentUser.sugar_records;
+    this.recordService.getRecords(this.loginService.currentUser.id).subscribe(data => {
+      this.records = data;
+    })
   }
 
   editRecord = (recordObj) => {
@@ -23,9 +26,9 @@ export class RecordListComponent implements OnInit {
     while(!(parseFloat(value) > 0)){
       value = prompt("Please enter new Bloodsugar level:",recordObj.value);
     }
-    let record = {
-      id: recordObj.id,
-      value: parseFloat(value)
+    let record:Record = {
+      id: parseInt(recordObj.id),
+      value: parseFloat(value),
     }
     this.recordService.editRecord(record).subscribe(data =>{
      this.records = this.records.map(record => record.id === data.id ? data : record)

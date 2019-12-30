@@ -1,5 +1,6 @@
 import { Record } from './model/record';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Comment } from './model/comment';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -22,17 +23,24 @@ export class RecordService {
 
   constructor(private http : HttpClient) { }
 
-  addRecord = (recordInfo):Observable<Record> => {
+  addRecord = (recordInfo:any):Observable<Record> => {
     // console.log('Posting to: ',this.BASE_URL+'record',' Data: ',recordInfo);
     return this.http.post<Record>(this.BASE_URL+'record',recordInfo, httpOptions);
   }
 
-  editRecord = (recordObj) => {
-    return this.http.patch(this.BASE_URL+'record/'+recordObj.id, recordObj,httpOptions)
+  editRecord = (recordObj:Record) => {
+    return this.http.patch<Record>(this.BASE_URL+'record/'+recordObj.id, recordObj,httpOptions)
   }
 
-  editComment = (commentObj) => {
-    return this.http.patch(this.BASE_URL+'comment/'+commentObj.id, commentObj,httpOptions)
+  editComment = (commentObj:Comment) => {
+    return this.http.patch<Record>(this.BASE_URL+'comment/'+commentObj.id, commentObj,httpOptions)
+  }
+
+  getRecords = (params:string) => {
+    // return this.http.get(this.BASE_URL+'/record', { params: params})
+    return this.http.get<Record[]>(this.BASE_URL+'/record', {
+      params : new HttpParams().set('userId', params)
+    })
   }
 
   }
