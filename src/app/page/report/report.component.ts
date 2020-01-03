@@ -15,16 +15,12 @@ export class ReportComponent implements OnInit {
 
   constructor(private loginService : LoginServiceService, private recordService: RecordService, private router : Router) { }
 
-  dropdownValue: string = "Last 7 days";
+  dropdownValue: string;
   records: Record[];
 
   ngOnInit() {
-      this.recordService.getRecords(this.loginService.currentUser.id).subscribe(data => {
-        this.records = data.slice(-7);
-      this.records.sort((a:any, b:any) => Date.parse(b.date) - Date.parse(a.date))
-      this.generateChart();
-      console.log(this.records,"INIT")
-    })
+    this.dropdownValue = "Last 7 days"
+    this.updateDropDown(null);
   }
 
   navigateToRecord = () => {
@@ -46,7 +42,7 @@ export class ReportComponent implements OnInit {
       labels: this.records.map(record => {
         let recDate = new Date(record.date);
         return `${recDate.getMonth()+1}/${recDate.getDate()}/${recDate.getFullYear()}`
-      })
+      }),
     }
     let myChart = new Chart(ctx, {
       type: 'line',
@@ -66,22 +62,48 @@ export class ReportComponent implements OnInit {
   }
 
   updateDropDown = (e) => {
-    this.dropdownValue = e.currentTarget.innerText;
+    if(e !== null){
+      this.dropdownValue = e.currentTarget.innerText;
+    }
     this.recordService.getRecords(this.loginService.currentUser.id).subscribe(data => {
+      let dLimit = new Date(Date.now());
+      let cDate = new Date(Date.now());
       switch (this.dropdownValue) {
         case "Last 7 days":
-          this.records = data.slice(-7);
+          this.setHMS(dLimit,0,0,0);
+          dLimit.setDate(dLimit.getDate()-7);
+
+          this.records = data.filter(record => {
+            if(new Date(record.date) >= dLimit && new Date(record.date) <=cDate){
+            return record
+            }
+          })
+
           break;
         case "Last 30 days":
-          this.records = data.slice(-30);
+          this.setHMS(dLimit,0,0,0);
+          dLimit.setDate(dLimit.getDate()-30);
+          
+          this.records = data.filter(record => {
+            if(new Date(record.date) >= dLimit && new Date(record.date) <=cDate){
+            return record
+            }
+          })
+
           break;
         default:
           break;
       }
-    this.records.sort((a:any, b:any) => Date.parse(b.date) - Date.parse(a.date))
+    // this.records.sort((a:any, b:any) => Date.parse(b.date) - Date.parse(a.date))
     this.generateChart();
     console.log(this.records);
    })
+  }
+
+  setHMS = (dateObj:Date, h:number, m:number, s:number) => {
+    dateObj.setHours(h);
+    dateObj.setMinutes(m);
+    dateObj.setSeconds(s);
   }
 
 
