@@ -10,11 +10,13 @@ import { RecordListComponent } from './page/record-list/record-list.component';
 import { HeaderComponent } from './component/header/header.component';
 import { ReversePipe } from './reverse.pipe';
 import { RecordComponent } from './page/record/record.component';
+import { ReportComponent } from './page/report/report.component';
 
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'records', component: RecordListComponent}
+  { path: 'records', component: RecordListComponent},
+  { path: 'report', component: ReportComponent},
 ];
 
 @NgModule({
@@ -24,7 +26,8 @@ const appRoutes: Routes = [
     RecordListComponent,
     HeaderComponent,
     ReversePipe,
-    RecordComponent
+    RecordComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,

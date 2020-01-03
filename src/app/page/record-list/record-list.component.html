@@ -1,8 +1,10 @@
+
 <h2>Records</h2>
+<button type="button" class="btn btn-outline-success" (click)="navigateToReport()" style="margin-right: 1rem;">Report Page</button>
 <button type="button" class="btn btn-outline-success" (click)="addRecord()">+ Add Record</button>
 <div class="row" *ngIf="records !== undefined">
      <app-record
-     *ngFor="let recordObj of records | slice:-6 | reverse" 
+     *ngFor="let recordObj of records | slice:0:6" 
      [record]="recordObj"
      (recordEmitter)="editRecord($event)"
      (commentEmitter)="editComment($event)"
