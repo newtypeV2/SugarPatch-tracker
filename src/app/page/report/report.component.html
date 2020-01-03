@@ -1,0 +1,20 @@
+<h2>Report</h2>
+<div class="row">
+    <button type="button" class="btn btn-outline-success" (click)="navigateToRecord()" style="margin-right: 1rem;">Back to Records</button>
+
+  <div class="btn-group dropright">
+    <button type="button" class="btn btn-outline-success">
+        {{dropdownValue}}
+    </button>
+    <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropright</span>
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" (click)="updateDropDown($event)">Last 7 days</a>
+        <a class="dropdown-item" (click)="updateDropDown($event)">Last 30 days</a>
+    </div>
+  </div>
+</div>
+<div class="row">
+    <canvas id="myChart" width="700" height="400" responsive=true></canvas>
+</div>
