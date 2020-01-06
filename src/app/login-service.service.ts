@@ -15,18 +15,23 @@ const httpOptions = {
 })
 export class LoginServiceService {
   private BASE_URL: string = 'http://localhost:3000/';
-  public currentUser;
 
-  constructor(private http: HttpClient, private router : Router) { }
+  constructor(private http: HttpClient) { }
 
   authenticateUser = (userData) => {
-    this.http.post(this.BASE_URL+'/login',userData, httpOptions).subscribe(data => {
-      this.currentUser = data;
-      if(this.currentUser.hasOwnProperty('id')){
-        this.router.navigate(['/records']);
-      }
-    });
+    return this.http.post(this.BASE_URL+'/login',userData, httpOptions)
+    
+    // this.http.post(this.BASE_URL+'/login',userData, httpOptions).subscribe(data => {
+    //   this.currentUser = data;
+    //   if(this.currentUser.hasOwnProperty('id')){
+    //     this.router.navigate(['/records']);
+    //   }
+    // });
    
+  }
+
+  getUser = () => {
+    return this.http.post(this.BASE_URL+'/login',{token: localStorage.getItem("token")}, httpOptions)
   }
 
 }

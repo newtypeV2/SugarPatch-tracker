@@ -4,7 +4,7 @@
 <button type="button" class="btn btn-outline-success" (click)="addRecord()">+ Add Record</button>
 <div class="row" *ngIf="records !== undefined">
      <app-record
-     *ngFor="let recordObj of records | slice:0:6" 
+     *ngFor="let recordObj of records | slice:0:7" 
      [record]="recordObj"
      (recordEmitter)="editRecord($event)"
      (commentEmitter)="editComment($event)"

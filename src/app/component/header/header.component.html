@@ -8,11 +8,11 @@
     </button>
     <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
       <ul class="navbar-nav ">
-        <li class="nav-item active" *ngIf="loginService.currentUser !== undefined && loginService.currentUser.id">
-          <span class="nav-link" href="#">{{loginService.currentUser.username | titlecase}}</span>
+        <li class="nav-item active" *ngIf="currentUser !== undefined">
+          <span class="nav-link" href="#">{{ currentUser.username | titlecase}}</span>
         </li>
-        <li class="nav-item active" *ngIf="loginService.currentUser !== undefined && loginService.currentUser.id">
-          <a class="nav-link" href="#">LOGOUT</a>
+        <li class="nav-item active" *ngIf="currentUser !== undefined">
+          <a class="nav-link" href="#" (click)="logoutHandler()">LOGOUT</a>
         </li>
       </ul>
     </div>

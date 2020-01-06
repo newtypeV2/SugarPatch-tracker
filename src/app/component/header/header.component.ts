@@ -8,9 +8,19 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @Input() title:string;
+  currentUser;
   constructor(private loginService:LoginServiceService) { }
 
   ngOnInit() {
+    if(localStorage.getItem("token")){
+      this.loginService.getUser().subscribe(data => {
+        this.currentUser = data;
+      })
+    }
+  }
+
+  logoutHandler = () => {
+    localStorage.removeItem("token");
   }
 
 }
