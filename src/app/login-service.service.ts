@@ -18,16 +18,18 @@ export class LoginServiceService {
   private BASE_URL: string = 'https://sugartracker-gg.herokuapp.com/'
   public currentUser;
 
-  constructor(private http: HttpClient, private router : Router) { }
+  constructor(private http: HttpClient) { }
 
   authenticateUser = (userData) => {
-    this.http.post(this.BASE_URL+'/login',userData, httpOptions).subscribe(data => {
-      this.currentUser = data;
-      if(this.currentUser.hasOwnProperty('id')){
-        this.router.navigate(['/records']);
-      }
-    });
-   
+    return this.http.post(this.BASE_URL+'/login',userData, httpOptions)
+  }
+
+  getUser = () => {
+    return this.http.post(this.BASE_URL+'/login',{token: localStorage.getItem("token")}, httpOptions)
+  }
+
+  isAuthenticated = () => {
+    return (!!localStorage.getItem("token"));
   }
 
 }

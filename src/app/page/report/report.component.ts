@@ -17,10 +17,15 @@ export class ReportComponent implements OnInit {
 
   dropdownValue: string;
   records: Record[];
+  currentUser;
 
   ngOnInit() {
-    this.dropdownValue = "Last 7 days"
-    this.updateDropDown(null);
+    this.loginService.getUser().subscribe(data => {
+      this.currentUser = data;
+      this.dropdownValue = "Last 7 days"
+      this.updateDropDown(null);
+    });
+    
   }
 
   navigateToRecord = () => {
@@ -58,46 +63,47 @@ export class ReportComponent implements OnInit {
         
       }
     });
-    console.log("GNERATING CHART",'Canvas found', ctx);
   }
 
   updateDropDown = (e) => {
     if(e !== null){
       this.dropdownValue = e.currentTarget.innerText;
     }
-    this.recordService.getRecords(this.loginService.currentUser.id).subscribe(data => {
-      let dLimit = new Date(Date.now());
-      let cDate = new Date(Date.now());
-      switch (this.dropdownValue) {
-        case "Last 7 days":
-          this.setHMS(dLimit,0,0,0);
-          dLimit.setDate(dLimit.getDate()-7);
-
-          this.records = data.filter(record => {
-            if(new Date(record.date) >= dLimit && new Date(record.date) <=cDate){
-            return record
-            }
-          })
-
-          break;
-        case "Last 30 days":
-          this.setHMS(dLimit,0,0,0);
-          dLimit.setDate(dLimit.getDate()-30);
-          
-          this.records = data.filter(record => {
-            if(new Date(record.date) >= dLimit && new Date(record.date) <=cDate){
-            return record
-            }
-          })
-
-          break;
-        default:
-          break;
-      }
-    // this.records.sort((a:any, b:any) => Date.parse(b.date) - Date.parse(a.date))
-    this.generateChart();
-    console.log(this.records);
-   })
+    if(this.currentUser !== undefined){
+      this.recordService.getRecords(this.currentUser.id).subscribe(data => {
+        let dLimit = new Date(Date.now());
+        let cDate = new Date(Date.now());
+        switch (this.dropdownValue) {
+          case "Last 7 days":
+            this.setHMS(dLimit,0,0,0);
+            dLimit.setDate(dLimit.getDate()-7);
+  
+            this.records = data.filter(record => {
+              if(new Date(record.date) >= dLimit && new Date(record.date) <=cDate){
+              return record
+              }
+            })
+  
+            break;
+          case "Last 30 days":
+            this.setHMS(dLimit,0,0,0);
+            dLimit.setDate(dLimit.getDate()-30);
+            
+            this.records = data.filter(record => {
+              if(new Date(record.date) >= dLimit && new Date(record.date) <=cDate){
+              return record
+              }
+            })
+  
+            break;
+          default:
+            break;
+        }
+      this.records.sort((a:any, b:any) => Date.parse(a.date) - Date.parse(b.date))
+      this.generateChart();
+     })
+    }
+    
   }
 
   setHMS = (dateObj:Date, h:number, m:number, s:number) => {
