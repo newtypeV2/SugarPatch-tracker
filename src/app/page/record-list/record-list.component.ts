@@ -1,30 +1,29 @@
 import { Record } from './../../model/record';
-
 import { RecordService } from './../../record.service';
 import { LoginServiceService } from './../../login-service.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-record-list',
   templateUrl: './record-list.component.html',
   styleUrls: ['./record-list.component.css']
 })
-export class RecordListComponent implements OnInit {
+export class RecordListComponent implements OnInit{
   records: Record[];
   currentUser;
   constructor(private loginService : LoginServiceService, private recordService: RecordService, private router: Router) { }
   
   ngOnInit() {
-    // this.records = this.loginService.currentUser.sugar_records;
-    this.loginService.getUser().subscribe(data => {
-      this.currentUser = data;
-      this.recordService.getRecords(this.currentUser.id).subscribe(data => {
-        this.records = data;
-        this.records.sort((a:any, b:any) => Date.parse(b.date) - Date.parse(a.date))
+    if(this.loginService.isAuthenticated){
+      this.loginService.getUser().subscribe(data => {
+        this.currentUser = data;
+        this.recordService.getRecords(this.currentUser.id).subscribe(data => {
+          this.records = data;
+          this.records.sort((a:any , b:any) => Date.parse(b.date) - Date.parse(a.date));
+        })
       })
-    });
+    }
   }
 
   editRecord = (recordObj) => {
@@ -64,14 +63,12 @@ export class RecordListComponent implements OnInit {
       comment: text
     }
     this.recordService.addRecord(userData).subscribe(data => {
-      // this.loginService.newRecord(data);
       this.records.push(data);
       this.records.sort((a:any, b:any) => Date.parse(b.date) - Date.parse(a.date))
     });
   }
 
   navigateToReport = () => {
-    console.log("GOING TO REPORT PAGE")
     this.router.navigate(["report"]);
   }
 }

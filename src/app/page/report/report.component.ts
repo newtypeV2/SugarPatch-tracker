@@ -63,7 +63,6 @@ export class ReportComponent implements OnInit {
         
       }
     });
-    console.log("GNERATING CHART",'Canvas found', ctx);
   }
 
   updateDropDown = (e) => {
@@ -100,9 +99,8 @@ export class ReportComponent implements OnInit {
           default:
             break;
         }
-      // this.records.sort((a:any, b:any) => Date.parse(b.date) - Date.parse(a.date))
+      this.records.sort((a:any, b:any) => Date.parse(a.date) - Date.parse(b.date))
       this.generateChart();
-      console.log(this.records);
      })
     }
     

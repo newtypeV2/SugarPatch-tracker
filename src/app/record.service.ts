@@ -24,7 +24,6 @@ export class RecordService {
   constructor(private http : HttpClient) { }
 
   addRecord = (recordInfo:any):Observable<Record> => {
-    // console.log('Posting to: ',this.BASE_URL+'record',' Data: ',recordInfo);
     return this.http.post<Record>(this.BASE_URL+'record',recordInfo, httpOptions);
   }
 

@@ -20,18 +20,14 @@ export class LoginServiceService {
 
   authenticateUser = (userData) => {
     return this.http.post(this.BASE_URL+'/login',userData, httpOptions)
-    
-    // this.http.post(this.BASE_URL+'/login',userData, httpOptions).subscribe(data => {
-    //   this.currentUser = data;
-    //   if(this.currentUser.hasOwnProperty('id')){
-    //     this.router.navigate(['/records']);
-    //   }
-    // });
-   
   }
 
   getUser = () => {
     return this.http.post(this.BASE_URL+'/login',{token: localStorage.getItem("token")}, httpOptions)
+  }
+
+  isAuthenticated = () => {
+    return (!!localStorage.getItem("token"));
   }
 
 }
